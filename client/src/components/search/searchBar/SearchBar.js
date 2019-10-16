@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createSelector } from 'reselect';
 import { SearchBox } from 'react-instantsearch-dom';
-import { HotKeys, configure } from 'react-hotkeys';
+import { HotKeys, ObserveKeys } from 'react-hotkeys';
 import { isEqual } from 'lodash';
 
 import {
@@ -19,10 +19,8 @@ import SearchHits from './SearchHits';
 import './searchbar-base.css';
 import './searchbar.css';
 
-// Configure react-hotkeys to work with the searchbar
-configure({ ignoreTags: ['select', 'textarea'] });
-
 const propTypes = {
+  innerRef: PropTypes.object,
   isDropdownEnabled: PropTypes.bool,
   isSearchFocused: PropTypes.bool,
   toggleSearchDropdown: PropTypes.func.isRequired,
@@ -51,7 +49,6 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
 
-    this.searchBarRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
@@ -87,7 +84,7 @@ class SearchBar extends Component {
 
   handleFocus(e) {
     const { toggleSearchFocused } = this.props;
-    const isSearchFocused = this.searchBarRef.current.contains(e.target);
+    const isSearchFocused = this.props.innerRef.current.contains(e.target);
     if (!isSearchFocused) {
       // Reset if user clicks outside of
       // search bar / closes dropdown
@@ -177,28 +174,26 @@ class SearchBar extends Component {
   };
 
   render() {
-    const { isDropdownEnabled, isSearchFocused } = this.props;
+    const { isDropdownEnabled, isSearchFocused, innerRef } = this.props;
     const { index } = this.state;
 
     return (
-      <div
-        className='fcc_searchBar'
-        data-testid='fcc_searchBar'
-        ref={this.searchBarRef}
-      >
+      <div className='fcc_searchBar' data-testid='fcc_searchBar' ref={innerRef}>
         <HotKeys handlers={this.keyHandlers} keyMap={this.keyMap}>
           <div className='fcc_search_wrapper'>
             <label className='fcc_sr_only' htmlFor='fcc_instantsearch'>
               Search
             </label>
-            <SearchBox
-              focusShortcuts={[83, 191]}
-              onChange={this.handleChange}
-              onFocus={this.handleFocus}
-              onSubmit={this.handleSearch}
-              showLoadingIndicator={true}
-              translations={{ placeholder }}
-            />
+            <ObserveKeys>
+              <SearchBox
+                focusShortcuts={[83, 191]}
+                onChange={this.handleChange}
+                onFocus={this.handleFocus}
+                onSubmit={this.handleSearch}
+                showLoadingIndicator={true}
+                translations={{ placeholder }}
+              />
+            </ObserveKeys>
             {isDropdownEnabled && isSearchFocused && (
               <SearchHits
                 handleHits={this.handleHits}

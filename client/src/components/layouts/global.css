@@ -57,6 +57,10 @@ th {
   margin: 0 0 1.2rem;
 }
 
+p {
+  line-height: 1.5rem;
+}
+
 .big-heading {
   font-size: 2.5rem !important;
 }
@@ -82,6 +86,9 @@ th {
   h3 {
     font-size: 1rem;
   }
+  .btn-cta {
+    font-size: 1.2rem;
+  }
 }
 
 .text-center {
@@ -92,11 +99,6 @@ th {
   color: var(--secondary-color);
 }
 
-a:not(.fcc_suggestion_item):hover {
-  color: var(--tertiary-color);
-  background-color: var(--tertiary-background);
-}
-
 a {
   color: inherit;
   text-decoration: underline;
@@ -105,6 +107,8 @@ a {
 a:hover,
 a:focus {
   text-decoration: none;
+  color: var(--tertiary-color);
+  background-color: var(--tertiary-background);
 }
 /* modal */
 
@@ -131,7 +135,8 @@ a:focus {
   border-color: var(--secondary-color);
 }
 
-/* button */
+button,
+input[type='submit'],
 .btn {
   background-color: var(--quaternary-background);
   border-width: 3px;
@@ -139,9 +144,10 @@ a:focus {
   color: var(--secondary-color);
   border-radius: 0px;
   text-decoration: none;
-  /* outline: none; */
 }
 
+button:hover,
+input[type='submit']:hover,
 .btn:hover,
 .btn-primary:hover {
   border-color: var(--secondary-color);
@@ -195,14 +201,6 @@ fieldset[disabled] .btn-primary.focus {
   color: var(--quaternary-color);
 }
 
-/* .btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
-  outline: none;
-} */
 .btn-cta {
   background-color: #ffac33;
   background-image: linear-gradient(#ffcc4d, #ffac33);
@@ -223,6 +221,17 @@ fieldset[disabled] .btn-primary.focus {
 .btn-cta:active {
   background-image: none;
   box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.btn-link {
+  color: inherit;
+  border: none;
+  text-decoration: underline;
+  background: transparent;
+}
+.btn-link:hover {
+  background: var(--tertiary-background);
+  text-decoration: none;
+  color: inherit;
 }
 
 strong {
@@ -361,6 +370,19 @@ pre {
   color: var(--highlight-color);
 }
 
+.has-error .help-block,
+.has-error .control-label,
+.has-error .radio,
+.has-error .checkbox,
+.has-error .radio-inline,
+.has-error .checkbox-inline,
+.has-error.radio label,
+.has-error.checkbox label,
+.has-error.radio-inline label,
+.has-error.checkbox-inline label {
+  color: var(--danger-color);
+}
+
 .panel-primary {
   border-color: var(--primary-color);
 }
@@ -383,4 +405,19 @@ blockquote .small {
 
 .alert {
   border-radius: 0px;
+}
+
+/* gatsby 404 */
+#search {
+  background-color: var(--quaternary-background);
+  color: var(--primary-color);
+  border-color: var(--quaternary-color);
+  border-width: 2px;
+  border-style: outset;
+  border-color: buttonface;
+  border-image: initial;
+}
+
+#search::placeholder {
+  color: var(--secondary-color);
 }

@@ -3,22 +3,22 @@ const newsPlaceholderRE = /#\{\{NEWS\}\}/g;
 const forumPlacehilderRE = /#\{\{FORUM\}\}/g;
 
 exports.createRedirects = function createRedirects(locations) {
-  const { api, news, forum } = locations;
+  const { api, newsProxy, forumProxy } = locations;
 
-  if (!(api && news && forum)) {
+  if (!(api && newsProxy && forumProxy)) {
     throw new Error(`One or more locations are missing, all are required.
 
     api: ${api}
-    news: ${news}
-    forum: ${forum}
+    newsProxy: ${newsProxy}
+    forumProxy: ${forumProxy}
 
     `);
   }
 
   return template
     .replace(apiPlaceholderRE, api)
-    .replace(newsPlaceholderRE, news)
-    .replace(forumPlacehilderRE, forum);
+    .replace(newsPlaceholderRE, newsProxy)
+    .replace(forumPlacehilderRE, forumProxy);
 };
 
 /* eslint-disable max-len */
@@ -26,6 +26,11 @@ const template = `
 #
 # WARNING: The order of this list is very important.
 #
+
+# domain mappings
+https://freecodecamp-dev.netlify.com/*        https://www.freecodecamp.dev/:splat 301!
+https://freecodecamp-org.netlify.com/*        https://www.freecodecamp.org/:splat 301!
+
 
 #api redirect
 /internal/*                                   #{{API}}/internal/:splat 200
